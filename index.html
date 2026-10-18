@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CSE 2027 TRACKER</title>
+<style>
+:root{--bg:#0a0e1a;--card:#131a2c;--tx:#e8ecf8;--mu:#8b95b3;--ac:#7c5cff;--ac2:#22d3ee;--ok:#34d399;--bd:#232c48;--in:#0d1322;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f3f5fc;--card:#fff;--tx:#141a2b;--mu:#5b6585;--bd:#e0e5f2;--in:#f1f3fa;color-scheme:light}}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(900px 500px at 10% -10%,#7c5cff33,transparent),radial-gradient(800px 500px at 100% 0,#22d3ee22,transparent),var(--bg);color:var(--tx);font:14px/1.45 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+.w{max-width:980px;margin:auto;padding:14px}
+h1{font-size:22px;margin:4px 0;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:16px;margin:0 0 10px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px;box-shadow:0 8px 30px #0003}
+.hero{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.ring{width:96px;height:96px;border-radius:50%;display:grid;place-items:center;font-weight:700;font-size:20px;background:conic-gradient(var(--ac) var(--p),var(--bd) 0)}
+.ring i{font-style:normal;width:74px;height:74px;border-radius:50%;background:var(--card);display:grid;place-items:center}
+.st{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;flex:1}
+.st div{background:var(--in);border-radius:12px;padding:8px 10px}
+.st b{display:block;font-size:20px}.st span{color:var(--mu);font-size:12px}
+nav{display:flex;gap:6px;overflow-x:auto;margin:10px 0;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;padding:6px 0;background:var(--bg)}
+button,select,input{font:inherit;color:var(--tx)}
+.nb,.pill{border:1px solid var(--bd);background:var(--card);padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.nb.on,.pill.on{background:linear-gradient(90deg,var(--ac),var(--ac2));color:#fff;border-color:transparent}
+.bar{height:6px;background:var(--bd);border-radius:9px;overflow:hidden;margin-top:6px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac),var(--ac2))}
+details{background:var(--card);border:1px solid var(--bd);border-radius:14px;margin-bottom:8px;padding:10px 12px}
+summary{cursor:pointer;display:flex;justify-content:space-between;gap:8px;font-weight:600}
+summary small{color:var(--mu);font-weight:500}
+.r{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid var(--bd);flex-wrap:wrap}
+.r label{flex:1;min-width:150px;display:flex;gap:8px;align-items:center;cursor:pointer}
+.r input[type=checkbox]{width:18px;height:18px;accent-color:var(--ac)}
+.dn{text-decoration:line-through;color:var(--mu)}
+.tg{font-size:11px;padding:2px 8px;border-radius:99px;background:#7c5cff26;color:var(--ac)}
+.sc,.mx input,.f input,.f select{background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:6px 8px}
+.sc{width:64px}.mx input{width:54px}.mx{color:var(--mu)}
+.x{background:none;border:0;color:#f87171;cursor:pointer;font-size:16px}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.f>*{width:100%}
+.btn{background:linear-gradient(90deg,var(--ac),var(--ac2));border:0;color:#fff;padding:9px 16px;border-radius:10px;cursor:pointer;font-weight:600}
+.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.cv{position:relative;height:260px}
+.ins li{margin:6px 0}.mu{color:var(--mu)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.gal img{width:100%;border-radius:10px;cursor:zoom-in;display:block}
+.ov{position:fixed;inset:0;background:#000d;display:grid;place-items:center;z-index:20;padding:10px}.ov img{max-width:100%;max-height:100%}
+.ft{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.qi{flex:1;min-width:130px;background:var(--in);border:1px solid var(--bd);border-radius:8px;padding:6px 8px}.an{border-left:4px solid var(--ac)}
+</style></head><body><div class="w"><h1>🎯 CSE 2027 TRACKER</h1><div class="mu">Made Easy · GO Classes · PW · PW Level Up · GFG</div>
+<div id="ann" style="margin-top:12px"></div><div id="hero" class="card hero"></div><nav id="nav"></nav><div id="app"></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let B=[];const add=(se,grp,subj,name,type,max)=>B.push({id:se+"|"+grp+"|"+name,se,grp,subj,name,type,max:0});
+// Made Easy
+const ME=[["TOC","Theory of Computation-1: RegEx, FA, CFG, PDA"],["TOC","Theory of Computation-2: Languages, Pumping, TM"],["Algo","Algorithms-1: Sorting, Complexity, D&C"],["Algo","Algorithms-2: Heaps, Graphs, Greedy, DP"],["COA","COA-1: Pipelining, Addressing, Control Unit"],["COA","COA-2: ALU, Memory, Cache, I/O"],["DBMS","Databases-1: ER, Normalization, Indexing"],["DBMS","Databases-2: SQL, Algebra, Transactions"],["EM","Eng. Maths-1: Linear Algebra, Distributions"],["EM","Eng. Maths-2: Calculus, Probability"],["GA","Aptitude-1: Numerical"],["GA","Aptitude-2: Verbal"],["OS","OS-1: Memory, Deadlock, File Systems"],["OS","OS-2: Processes, Sync, Scheduling"],["PDS","PDS-1: C, Arrays, Stacks, Recursion"],["PDS","PDS-2: Hashing, Lists, Trees"],["CN","CN-1: Layering, LAN, Application"],["CN","CN-2: IP, Routing, TCP/UDP"],["DL","Digital Logic-1: Boolean, Minimization"],["DL","Digital Logic-2: Sequential, Arithmetic"],["DM","Discrete Maths-1: Logic, Sets, Counting"],["DM","Discrete Maths-2: Lattices, Groups, Graphs"],["CD","Compiler Design-1: Lexical, SDT, ICG"],["CD","Compiler Design-2: Parsing, Optimization"]];
+ME.forEach((m,i)=>add("ME","Topicwise Tests",m[0],"T"+(i+1)+" · "+m[1],"Topic",25));
+[["DM","Discrete Mathematics"],["TOC","Theory of Computation"],["CD","Compiler Design"],["DL","Digital Logic"],["CN","Computer Networks"],["PDS","Programming & Data Structures"],["GA","General Aptitude"],["EM","Engineering Mathematics"],["OS","Operating System"],["COA","Comp. Org. & Architecture"],["Algo","Algorithms"],["DBMS","Database"]].forEach((s,i)=>add("ME","Single Subject Tests",s[0],"T"+(25+i)+" · "+s[1],"Subject",50));
+for(let i=1;i<=4;i++)add("ME","Full Syllabus Tests","Full","GATE Mock Test "+i,"Full",100);
+for(let i=1;i<=4;i++)add("ME","Full Syllabus Tests","Full","Full Syllabus Test-"+i+" (Basic)","Full",100);
+for(let i=5;i<=8;i++)add("ME","Full Syllabus Tests","Full","Full Syllabus Test-"+i+" (Advance)","Full",100);
+// GO tests
+const GO=[["Discrete Mathematics","DM",["Propositional & FOL","Sets, Functions, Relations, Lattices","Group Theory","Combinatorics","Graph Theory"],3],["Engineering Mathematics","EM",["Linear Algebra 1","Linear Algebra 2","Counting 1","Counting 2","Bayes & Conditional Prob.","Complete Probability","Complete Calculus"],3],["Digital Logic","DL",["Boolean Algebra, Minimization, Number Sys.","Combinational Circuits","Sequential Circuits","Boolean Algebra (Extra)"],3],["DBMS","DBMS",["Normalization","ER Model, Integrity","SQL, TRC, Rel. Algebra","Indexing, B/B+ Tree","Transactions"],3],["C Programming","C",["Number Rep., Control, Operators","Storage class, Functions, Recursion, Pointers","Pointers, Strings, Structures, DMA"],3],["Data Structures","DS",["Linked List","Asymptotic, Loops TC","Stack & Queue","Trees (BST, AVL, Heap)","Hashing"],3],["Algorithms","Algo",["Divide & Conquer","Recurrence","Greedy","Dynamic Programming"],3],["Theory of Computation","TOC",["Finite Automata","Regular Expression","CFG, PDA","Closure, Language Class","Decidability","Countability"],3],["Compiler Design","CD",["Lexical, Syntax, Parsers","Semantic, SDT, SDD","Intermediate Code, DAG, SSA, Optimisation"],2],["Computer Organization","COA",["Basics, Addressing, Control Unit","Pipelining","Cache Memory","I/O, Magnetic Disk"],3],["Operating Systems","OS",["Scheduling","Synchronisation, Deadlock","Memory Management","File system, Fork, Syscalls"],3],["Computer Networks","CN",["IP addressing, Data Link","Network Layer","Routing, Transport","Transport, Application"],3]];
+GO.forEach(g=>{g[2].forEach((t,i)=>add("GT",g[0],g[1],"Topic Test "+(i+1)+" · "+t,"Topic",25));for(let i=1;i<=g[3];i++)add("GT",g[0],g[1],"Subject Test "+i,"Subject",50)});
+for(let i=1;i<=10;i++)add("GT","Aptitude","GA","Aptitude Test "+i,"Subject",25);
+["Combinatorics RF1","Combinatorics RF2","Linear Algebra RF1","Digital Logic RF1","Computer Network RF1","Computer Network RF2","Operating System RF1"].forEach(n=>add("GT","Rapid Fire Tests",n.includes("Comb")||n.includes("Linear")?(n[0]=="C"&&n[1]=="o"&&n.includes("Comb")?"DM":"EM"):n.includes("Digital")?"DL":n.includes("Network")?"CN":"OS",n,"Rapid",15));
+["DM + EM","CN + DBMS + TOC + CD","OS + COA + DL","C + DSA"].forEach((n,i)=>add("GT","Mixed Subjects Full Length","Mixed","Mixed Test "+(i+1)+" · "+n,"Mixed",100));
+for(let i=1;i<=24;i++)add("GT","Full-Length Mock GATE Tests","Full","GO CS Mock Test "+i+(i>17?" (coming soon)":""),"Mock",100);
+// GO quizzes
+[["Engineering Mathematics","EM","Linear Algebra WQ 1|Linear Algebra WQ 2|Linear Algebra WQ 3|Linear Algebra WQ 4|Eigen Vectors WQ 5|Rank, System of Equations WQ 6|Conditional Probability WQ 1|Probability Distributions WQ 2|Calculus WQ 1|Calculus WQ 2|Calculus WQ 3"],["C Programming","C","Number Rep. & Integer Promotion WQ 1|Functions, Storage Classes & Loops WQ 2|Pointers, Storage Classes & Recursion WQ 3|Structures, Pointers & Storage Classes WQ 4"],["Data Structure","DS","Asymptotic Notation & Loop TC WQ 1|Linked List & Loop TC WQ 2|Stack, Queue & Loop TC WQ 3|Complete DS Syllabus WQ 4|Complete DS Syllabus WQ 5"]].forEach(q=>q[2].split("|").forEach(n=>add("GQ",q[0],q[1],n,"Quiz",10)));
+const SER={ME:"Made Easy",GT:"GO Tests",GQ:"GO Quizzes",PR:"PW Regular",PL:"PW Level Up",GF:"GFG"};
+const ad=(se,g,s,n,t)=>add(se,g,s,n,t),L=s=>s.split(",").map(x=>x.split("|")),W=s=>s.split(" "),C=s=>s.split(",");
+// PW Regular
+W("C C Algo Algo TOC TOC COA COA EM EM GA GA DBMS DBMS CN CN DS DS CD OS OS DM DM DL DL").forEach((s,i)=>{const d=new Date(2026,4,17+i*3);ad("PR","Topic Tests (TWT)",s,"TWT "+(i+1)+" · "+s,"Topic",d.getDate()+" "+d.toLocaleString("en",{month:"short"}))});
+L("PDS|29 Jul,TOC|2 Aug,DM|6 Aug,COA|10 Aug,EM|14 Aug,GA|18 Aug,Algo|22 Aug,DBMS|26 Aug,CN|30 Aug,OS|3 Sep,DL|7 Sep,CD|13 Sep").forEach((x,i)=>ad("PR","Subject Tests (SWT)",x[0],"SWT "+(i+1)+" · "+x[0],"Subject",x[1]));
+L("C+DS+TOC+Algo|20 Sep,Maths+Aptitude|27 Sep,COA+DBMS+CN|4 Oct,CD+OS+DL+DM|11 Oct").forEach((x,i)=>ad("PR","Mixed Tests (MST)","Mixed","MST "+(i+1)+" · "+x[0],"Mixed",x[1]));
+C("18 Oct,25 Oct,1 Nov,15 Nov,22 Nov,29 Nov,6 Dec,13 Dec,20 Dec,27 Dec,3 Jan,10 Jan").forEach((d,i)=>ad("PR","Full Syllabus (GBG)","Full","GBG "+(i+1),"Full",d));
+L("GATE 2022|30 Oct,GATE 2023|30 Oct,GATE 2024|30 Oct,GATE 2025|20 Nov,GATE 2026|20 Nov").forEach((x,i)=>ad("PR","GATE PYQ Tests","Full","PYQ Test "+(i+1)+" · "+x[0],"PYQ",x[1]));
+// PW Level Up
+const D39=C("31 May,3 Jun,6 Jun,11 Jun,14 Jun,18 Jun,21 Jun,24 Jun,27 Jun,2 Jul,5 Jul,8 Jul,12 Jul,15 Jul,18 Jul,23 Jul,26 Jul,29 Jul,1 Aug,5 Aug,8 Aug,12 Aug,15 Aug,19 Aug,23 Aug,25 Aug,29 Aug,2 Sep,6 Sep,9 Sep,12 Sep,16 Sep,19 Sep,23 Sep,26 Sep,30 Sep,3 Oct,7 Oct,10 Oct"),SL=W("C DS Algo GA DBMS CN OS EM CD DM TOC COA DL");
+D39.forEach((d,i)=>ad("PL","Subject Tests (SWT)",SL[i/3|0],"SWT "+(i+1)+" · "+SL[i/3|0],"Subject",d));
+const M4=C("COA+TOC+EM,OS+DM+Algo,DL+DS+GA,CN+C+CD+DBMS"),MD=C("17 Oct,24 Oct,31 Oct,7 Nov,14 Nov,21 Nov,28 Nov,5 Dec");
+MD.forEach((d,i)=>ad("PL","Mixed Tests (MST)","Mixed","MST "+(i+1)+" · "+M4[i%4],"Mixed",d));
+C("12 Dec,19 Dec,26 Dec,2 Jan,9 Jan,16 Jan").forEach((d,i)=>ad("PL","Full Length Tests (FLT)","Full","FLT "+(i+1),"Full",d));
+// GFG
+const T13=W("DL C DBMS Algo DM TOC DS CD CN COA EM GA OS");[...T13,...T13].forEach((s,i)=>ad("GF","Topic Tests (TT)",s,"TT "+(i+1)+" · "+s,"Topic",i<6?"17 May":i<13?"24 May":i<19?"31 May":"7 Jun"));
+const SD=[[6,"14 Jun"],[2,"28 Jun"],[3,"4 Jul"],[2,"11 Jul"],[3,"18 Jul"],[3,"25 Jul"],[3,"1 Aug"],[4,"8 Aug"]].flatMap(([n,d])=>Array(n).fill(d));
+W("DL C DBMS Algo EM TOC DS EM DM COA CD GA OS DL C Algo CN GA TOC DS EM DBMS COA CD DM OS").forEach((s,i)=>ad("GF","Subject Tests (ST)",s,"ST "+(i+1)+" · "+s,"Subject",SD[i]));
+const MT=C("EM+PDS+Algo,DM+OS+DL,CN+GA+DBMS,CN+EM+GA,DM+PDS+Algo,COA+OS+DL,TOC+CD+DBMS,TOC+CD+COA"),MTD=C("15 Aug,22 Aug,29 Aug,5 Sep,12 Sep,20 Sep,27 Sep,3 Oct");
+MT.forEach((m,i)=>ad("GF","Mixed Tests (MT)","Mixed","MT "+(i+1)+" · "+m,"Mixed",MTD[i]));
+C("10 Oct,25 Oct,1 Nov,8 Nov,15 Nov,22 Nov,29 Nov,6 Dec,13 Dec,20 Dec").forEach((d,i)=>ad("GF","Full Tests (FT)","Full","FT "+(i+1),"Full",d));
+const YQ=C("2026 S1,2026 S2,2025 S1,2025 S2,2024,2023,2022,2021 S1,2021 S2,2020,2019,2018,2017 S1,2017 S2,2016 S1,2016 S2,2015 S1,2015 S2,2015 S3,2014 S1,2014 S2,2014 S3,2013 S1,2013 S2"),YD=C("17 Oct,18 Oct,22 Oct,22 Oct,28 Oct,4 Nov,11 Nov,18 Nov,18 Nov,2 Dec,9 Dec,16 Dec,23 Dec,23 Dec,30 Dec,30 Dec,6 Jan,6 Jan,6 Jan,13 Jan,13 Jan,13 Jan,20 Jan,20 Jan");
+YQ.forEach((y,i)=>ad("GF","GATE PYQ Tests","Full","GATE "+y+" CS","PYQ",YD[i]));
+C("27 Dec,3 Jan,10 Jan,17 Jan,24 Jan").forEach((d,i)=>ad("GF","GATE Before GATE (GBG)","Full","GBG "+(i+1),"Full",d));
+B.forEach((b,i)=>b.k=""+i);
+// state
+let U=null,DB=null,ADMIN=false,P={},CUS=[],EXAM="2027-02-07",V="list",F="ALL",CH=[],AN=[],tm;
+const ls=(k,v)=>{try{if(v===undefined)return localStorage.getItem(k);v===null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}};
+const all=()=>B.concat(CUS.map((c,i)=>c&&{k:"c"+i,se:c[0],grp:c[1],subj:c[2],name:c[3],type:c[4],custom:1}).filter(Boolean));
+const day=()=>Math.floor(Date.now()/864e5),pct=(a,b)=>b?Math.round(a/b*100):0,msg=t=>{const e=$("#lm");if(e)e.textContent=t};
+const api=async(m,u,b)=>{const r=await fetch("/api/"+u,{method:m,headers:b?{"Content-Type":"application/json"}:{},body:b?JSON.stringify(b):undefined,credentials:"same-origin"});const j=await r.json().catch(()=>({}));if(!r.ok)throw Object.assign(new Error(j.error||("Error "+r.status)),{status:r.status});return j};
+let pend=0;
+const save=()=>{pend=1;clearTimeout(tm);tm=setTimeout(flush,800)};
+function flush(keep){if(!pend||!U)return;pend=0;fetch("/api/progress",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({p:P,c:CUS,x:EXAM}),keepalive:!!keep,credentials:"same-origin"}).then(r=>{if(!r.ok)throw new Error(r.status)}).catch(e=>{pend=1;alert("Save failed ("+e.message+"). Check your connection.")})}
+addEventListener("pagehide",()=>flush(1));document.addEventListener("visibilitychange",()=>{if(document.hidden)flush(1);else if(U)refAnn()});
+const set=(k,f)=>{const d=P[k]=P[k]||{};f(d);if(!d.c&&d.s==null&&!d.q&&!d.m)delete P[k];save()};
+async function auth(reg){const n=$("#ln").value.trim(),p=$("#lp").value;if(n.length<2||p.length<4)return msg("Name 2+ chars, password 4+ chars");try{const j=await api("POST",reg?"register":"login",{name:n,password:p});U={id:j.user.id,n:j.user.name};ADMIN=j.user.admin;await load();start()}catch(e){msg(e.message)}}
+async function load(){try{const d=await api("GET","progress");P=d.p||{};CUS=d.c||[];EXAM=d.x||EXAM}catch(e){}}
+async function refAnn(){try{AN=(await api("GET","announcements")).items}catch(e){}ann()}
+function start(){render();refAnn()}
+async function boot(){try{const j=await api("GET","me");U={id:j.user.id,n:j.user.name};ADMIN=j.user.admin;await load();start()}catch(e){render()}}
+function ann(){const e=$("#ann");e.innerHTML=U&&(AN.length||ADMIN)?`<div class="card an"><h2>📢 Announcements</h2>${AN.map(a=>`<div class=r><span style="flex:1">${esc(a.t)}<br><small class=mu>${esc(a.by||"")} · ${new Date(a.ts).toLocaleDateString()}</small></span>${ADMIN?`<button class=x data-ad="${a.id}">✕</button>`:""}</div>`).join("")}${ADMIN?`<div class=f style="margin-top:8px"><input id=at placeholder="Post an announcement…"><button class=btn data-a=post>Post</button></div>`:""}</div>`:""}
+const NAV=[["list","✅ Checklist"],["rev","🔁 Revisit"],["an","📊 Analysis"],["add","➕ Add"],["gr","🖼 Graphs"]];
+function stats(){const A=all(),d=A.filter(i=>P[i.k]&&P[i.k].c);return{A,d,sc:d.filter(i=>P[i.k].s!=null&&P[i.k].m>0).map(i=>({i,p:P[i.k].s/P[i.k].m*100,t:P[i.k].t||0}))}}
+function render(){CH.forEach(c=>c.destroy());CH=[];const h=$("#hero"),n=$("#nav");
+if(!U){h.style.display=n.style.display="none";$("#app").innerHTML=`<div class=card style="max-width:380px;margin:auto"><h2>Login / Register</h2><div class=f style="grid-template-columns:1fr"><input id=ln placeholder="Name"><input id=lp type=password placeholder="Password"></div><p><button class=btn data-a=login>Login</button> <button class="btn" data-a=reg style="background:var(--bd)">Register</button></p><div id=lm class=mu></div></div>`;return}
+h.style.display="";n.style.display="";const{A,d,sc}=stats(),p=pct(d.length,A.length),avg=sc.length?Math.round(sc.reduce((a,b)=>a+b.p,0)/sc.length)+"%":"–";
+h.innerHTML=`<div class=ring style="--p:${p}%"><i>${p}%</i></div><div class=st><div><b>${d.length}/${A.length}</b><span>Completed</span></div><div><b>${A.length-d.length}</b><span>Remaining</span></div><div><b>${avg}</b><span>Avg score</span></div><div><b>${Math.max(0,Math.ceil((new Date(EXAM)-Date.now())/864e5))}</b><span>Days to exam</span></div></div><div class=mu style="width:100%">👤 ${esc(U.n)}${ADMIN?" · admin":""} · <a href="#" data-a=out style="color:var(--ac)">log out</a></div>`;
+n.innerHTML=NAV.map(x=>`<button class="nb ${V==x[0]?"on":""}" data-v=${x[0]}>${x[1]}</button>`).join("");
+({list:vList,rev:vRev,an:vAn,add:vAdd,gr:vGr})[V]()}
+const fl=()=>`<div class=ft>${[["ALL","All"],...Object.entries(SER)].map(s=>`<button class="pill ${F==s[0]?"on":""}" data-f=${s[0]}>${s[1]}</button>`).join("")}</div>`;
+const row=it=>{const d=P[it.k]||{};return`<div class=r><label><input type=checkbox data-c="${it.k}" ${d.c?"checked":""}><span class="${d.c?"dn":""}">${esc(it.name)}</span></label><span class=tg>${it.type}</span><input class=sc type=number step=any placeholder=score value="${d.s??""}" data-s="${it.k}"><span class=mx>/<input type=number placeholder=max value="${d.m||""}" data-m="${it.k}"></span><input class=qi placeholder="revisit Qs e.g. 3,7,12" value="${esc(d.q||"")}" data-q="${it.k}">${it.custom?`<button class=x data-x="${it.k}">✕</button>`:""}</div>`};
+function vList(){const gs={};all().forEach(it=>{if(F!="ALL"&&it.se!=F)return;(gs[it.se+"|"+it.grp]=gs[it.se+"|"+it.grp]||[]).push(it)});
+$("#app").innerHTML=fl()+Object.keys(gs).map(k=>{const ix=gs[k],dn=ix.filter(i=>P[i.k]&&P[i.k].c).length,[se,g]=k.split("|");return`<details ${(window.OP||{})[k]?"open":""} data-k="${esc(k)}"><summary><span>${esc(g)} <small>${SER[se]}</small></span><small>${dn}/${ix.length}</small></summary><div class=bar><i style="width:${pct(dn,ix.length)}%"></i></div>${ix.map(row).join("")}</details>`}).join("")}
+function vRev(){const L2=all().filter(i=>P[i.k]&&P[i.k].q&&(F=="ALL"||i.se==F));$("#app").innerHTML=fl()+`<div class=card><h2>Questions to revisit <small class=mu>(${L2.reduce((a,i)=>a+P[i.k].q.split(",").length,0)} total)</small></h2>${L2.map(i=>`<div class=r><span style="flex:1"><b>${esc(i.name)}</b> <small class=mu>${SER[i.se]}</small></span>${P[i.k].q.split(",").map(q=>`<span class=tg>Q${esc(q)}</span>`).join("")}<button class=x data-rq="${i.k}" title="Done revising">✔</button></div>`).join("")||'<p class=mu>Nothing to revisit. Add question numbers in the checklist rows.</p>'}</div>`}
+function vAdd(){$("#app").innerHTML=`<div class=card><h2>Add your own test / quiz</h2><div class=f><select id=a1>${Object.entries(SER).map(s=>`<option value=${s[0]}>${s[1]}</option>`)}</select><input id=a2 placeholder="Group"><input id=a3 placeholder="Test / quiz name"><select id=a4><option>Topic</option><option>Subject</option><option>Full</option><option>Quiz</option><option>Mixed</option></select><input id=a6 placeholder="Subject tag (DM, OS…)"></div><p><button class=btn data-a=addt>Add to checklist</button></p></div><div class=card><h2>Exam date</h2><input type=date id=ex value="${EXAM}"></div>`}
+function vGr(){const G=JSON.parse(ls("cse_g_"+U.id)||"[]");$("#app").innerHTML=`<div class=card><h2>Upload score / analysis graphs</h2><div class=f><input id=cap placeholder="Caption"><input type=file id=fl accept="image/*" multiple></div><p class=mu>Stored on this device only (keeps the database small).</p></div><div class=gal>${G.map((m,i)=>`<div class=card style="padding:8px"><img src="${m.src}" data-z=${i}><div style="font-size:12px;margin-top:6px">${esc(m.cap)} <button class=x data-di=${i}>✕</button></div></div>`).join("")||'<p class=mu>No graphs yet.</p>'}</div>`}
+function mk(t,cfg){const d=document.createElement("div");d.className="card";d.innerHTML=`<h2>${t}</h2><div class=cv><canvas></canvas></div>`;$("#app").lastChild.appendChild(d);CH.push(new Chart(d.querySelector("canvas"),cfg))}
+function vAn(){const{A,d,sc}=stats(),C5=["#7c5cff","#22d3ee","#34d399","#fbbf24","#f472b6","#fb7185"];Chart.defaults.color=getComputedStyle(document.documentElement).getPropertyValue("--mu");Chart.defaults.maintainAspectRatio=false;
+const sub={};A.forEach(i=>{const s=sub[i.subj]=sub[i.subj]||{t:0,d:0,p:[]};s.t++;if(P[i.k]&&P[i.k].c)s.d++});sc.forEach(x=>sub[x.i.subj].p.push(x.p));
+const ks=Object.keys(sub),av=k=>sub[k].p.length?Math.round(sub[k].p.reduce((a,b)=>a+b,0)/sub[k].p.length):null,rem=A.length-d.length,wk=Math.max(.5,(new Date(EXAM)-Date.now())/6048e5),rk=ks.filter(k=>av(k)!=null).sort((a,b)=>av(a)-av(b)),lo=ks.filter(k=>sub[k].t>2).sort((a,b)=>sub[a].d/sub[a].t-sub[b].d/sub[b].t)[0],days=new Set(d.map(i=>P[i.k].t).filter(Boolean)).size,nq=A.reduce((a,i)=>a+(P[i.k]&&P[i.k].q?P[i.k].q.split(",").length:0),0);
+let ins=`<li>~<b>${(rem/wk).toFixed(1)} tests/week</b> needed to finish ${rem} remaining before the exam.</li>`;if(lo)ins+=`<li>Least-covered subject: <b>${lo}</b> (${sub[lo].d}/${sub[lo].t}).</li>`;
+ins+=rk.length?`<li>Weakest: <b>${rk.slice(0,3).map(k=>k+" "+av(k)+"%").join(", ")}</b>. Strongest: <b>${rk.slice(-2).reverse().map(k=>k+" "+av(k)+"%").join(", ")}</b>.</li>`:`<li>Enter score and max marks to unlock score analysis.</li>`;
+if(sc.length>=4){const s=sc.slice().sort((a,b)=>a.t-b.t),h=s.length>>1,m=x=>x.reduce((a,b)=>a+b.p,0)/x.length;ins+=`<li>Trend: recent ${Math.round(m(s.slice(h)))}% vs earlier ${Math.round(m(s.slice(0,h)))}% – ${m(s.slice(h))>=m(s.slice(0,h))?"improving 📈":"dipping 📉"}</li>`}
+ins+=`<li>Active on <b>${days}</b> day(s); <b>${nq}</b> questions queued for revisit.</li>`;
+$("#app").innerHTML=`<div class=card><h2>Insights</h2><ul class=ins>${ins}</ul></div><div class=g2></div>`;
+const se=Object.keys(SER);
+mk("Progress by series",{type:"bar",data:{labels:se.map(k=>SER[k]),datasets:[{data:se.map(k=>{const a=A.filter(i=>i.se==k);return pct(a.filter(i=>P[i.k]&&P[i.k].c).length,a.length)}),backgroundColor:C5}]},options:{scales:{y:{max:100}},plugins:{legend:{display:false}}}});
+mk("Completion by subject",{type:"bar",data:{labels:ks,datasets:[{label:"Done",data:ks.map(k=>sub[k].d),backgroundColor:C5[2]},{label:"Left",data:ks.map(k=>sub[k].t-sub[k].d),backgroundColor:"#8b95b355"}]},options:{scales:{x:{stacked:true},y:{stacked:true}}}});
+const ts=sc.slice().sort((a,b)=>a.t-b.t);
+mk("Score trend (%)",{type:"line",data:{labels:ts.map((x,i)=>i+1),datasets:[{label:"Score %",data:ts.map(x=>Math.round(x.p)),borderColor:C5[0],backgroundColor:"#7c5cff33",fill:true,tension:.3}]},options:{scales:{y:{max:100,min:0}}}});
+mk("Average score by subject",{type:"radar",data:{labels:rk,datasets:[{label:"Avg %",data:rk.map(av),borderColor:C5[1],backgroundColor:"#22d3ee33"}]},options:{scales:{r:{max:100,min:0}}}});
+const w=Array(8).fill(0);d.forEach(i=>{const t=P[i.k].t;if(t){const k=Math.floor((day()-t)/7);if(k<8)w[7-k]++}});
+mk("Tests per week (last 8)",{type:"bar",data:{labels:w.map((_,i)=>i==7?"This wk":"-"+(7-i)+"w"),datasets:[{data:w,backgroundColor:C5[3]}]},options:{plugins:{legend:{display:false}}}})}
+document.addEventListener("click",e=>{const t=e.target,g=a=>t.dataset[a];
+if(g("v")){V=g("v");render()}else if(g("f")){F=g("f");render()}
+else if(g("a")=="login"||g("a")=="reg")auth(g("a")=="reg");
+else if(g("a")=="out"){e.preventDefault();flush();api("POST","logout").catch(()=>{}).then(()=>{U=null;ADMIN=false;P={};CUS=[];AN=[];ann();render()})}
+else if(g("a")=="post"){const x=$("#at").value.trim();if(x)api("POST","announcements",{t:x}).then(refAnn).catch(er=>alert(er.message))}
+else if(g("ad")){api("DELETE","announcements/"+g("ad")).then(refAnn).catch(()=>{})}
+else if(g("rq")){set(g("rq"),d=>{delete d.q});render()}
+else if(g("x")){if(confirm("Delete this custom test?")){CUS[+g("x").slice(1)]=0;delete P[g("x")];save();render()}}
+else if(g("a")=="addt"){const n=$("#a3").value.trim();if(!n)return;CUS.push([$("#a1").value,$("#a2").value||"Custom",$("#a6").value||"Other",n,$("#a4").value]);save();V="list";render()}
+else if(g("di")!=null){const G=JSON.parse(ls("cse_g_"+U.id)||"[]");G.splice(+g("di"),1);ls("cse_g_"+U.id,JSON.stringify(G));render()}
+else if(g("z")!=null){const G=JSON.parse(ls("cse_g_"+U.id)||"[]"),o=document.createElement("div");o.className="ov";o.innerHTML=`<img src="${G[+g("z")].src}">`;o.onclick=()=>o.remove();document.body.appendChild(o)}});
+document.addEventListener("toggle",e=>{const k=e.target.dataset&&e.target.dataset.k;if(k){window.OP=window.OP||{};OP[k]=e.target.open}},true);
+document.addEventListener("change",e=>{const t=e.target,D=t.dataset;
+if(D.c){set(D.c,d=>{d.c=t.checked?1:0;if(t.checked)d.t=day()});render()}
+else if(D.s){set(D.s,d=>{d.s=t.value===""?undefined:+t.value;if(d.s!=null&&!d.c){d.c=1;d.t=day()}});render()}
+else if(D.m){set(D.m,d=>{d.m=+t.value||undefined});render()}
+else if(D.q){set(D.q,d=>{d.q=t.value.replace(/[^0-9,]/g,"").replace(/,+/g,",").replace(/^,|,$/g,"")||undefined});render()}
+else if(t.id=="ex"){EXAM=t.value;save();render()}
+else if(t.id=="fl"){[...t.files].forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const k=Math.min(1,700/im.width),c=document.createElement("canvas");c.width=im.width*k;c.height=im.height*k;c.getContext("2d").drawImage(im,0,0,c.width,c.height);const G=JSON.parse(ls("cse_g_"+U.id)||"[]");G.push({src:c.toDataURL("image/jpeg",.6),cap:$("#cap").value||f.name});ls("cse_g_"+U.id,JSON.stringify(G));render()};im.src=r.result};r.readAsDataURL(f)})}});
+render();boot();
+</script></body></html>
